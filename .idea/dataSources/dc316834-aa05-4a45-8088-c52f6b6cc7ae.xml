@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="funny">
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.19">
+    <root id="1">
+      <ServerVersion>3.31.1</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="main">
+      <Current>1</Current>
+    </schema>
+    <collation id="3" parent="1" name="BINARY"/>
+    <collation id="4" parent="1" name="NOCASE"/>
+    <collation id="5" parent="1" name="RTRIM"/>
+    <table id="6" parent="2" name="Saved_tasks"/>
+    <table id="7" parent="2" name="full_info_saved_task"/>
+    <table id="8" parent="2" name="sqlite_master">
+      <System>1</System>
+    </table>
+    <column id="9" parent="6" name="id">
+      <Position>1</Position>
+      <DataType>INT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="10" parent="6" name="task_info">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <index id="11" parent="6" name="sqlite_autoindex_Saved_tasks_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="12" parent="6">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_Saved_tasks_1</UnderlyingIndexName>
+    </key>
+    <key id="13" parent="6">
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_Saved_tasks_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="14" parent="6">
+      <ColNames>id</ColNames>
+      <RefTableName>full_info_saved_task</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="15" parent="7" name="id">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="16" parent="7" name="task_info">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <column id="17" parent="7" name="file_path">
+      <Position>3</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <column id="18" parent="7" name="table_path">
+      <Position>4</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <column id="19" parent="7" name="date_save">
+      <Position>5</Position>
+      <DataType>DATETIME|0s</DataType>
+    </column>
+    <index id="20" parent="7" name="task_id">
+      <ColNames>id</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <column id="21" parent="8" name="type">
+      <Position>1</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="22" parent="8" name="name">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="23" parent="8" name="tbl_name">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="24" parent="8" name="rootpage">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="25" parent="8" name="sql">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+    </column>
+  </database-model>
+</dataSource>
