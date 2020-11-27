@@ -1,8 +1,8 @@
-import datetime
-import json
+from datetime import datetime
+from json import dump, load
 import os
-import random
-import shutil
+from random import randint
+from shutil import copy2
 import sqlite3
 import sys
 
@@ -857,17 +857,17 @@ VALUES (?, ?, ?, ?)''', (f'I{i + 1}', MYH[i + 1], sum(MH[i + 1]), MYKY[i]))
             os.mkdir('saves')
             path = os.path.abspath('.') + '\saves'
         list_dir = os.listdir(path)
-        id = random.randint(1, 1000000000000)
+        id = randint(1, 1000000000000)
         while str(id) + '.json' in list_dir:
-            id = random.randint(1, 1000000000000)
-        shutil.copy2('for_result.db', path + f'\\{id}.db')
+            id = randint(1, 1000000000000)
+        copy2('for_result.db', path + f'\\{id}.db')
         with open(path + '\\' + str(id) + ".json",
                   "w") as file:
-            json.dump(self.dict_, file)
+            dump(self.dict_, file)
         path_ = path + '\\' + str(id) + ".json"
         cur.execute('''INSERT INTO full_info_saved_task(id, task_info, file_path, table_path, date_save)
         VALUES (?, ?, ?, ?, ?)''',
-                    (id, str(self.task.normal()), path_, path + f'\{id}.db', datetime.datetime.now()))
+                    (id, str(self.task.normal()), path_, path + f'\{id}.db', datetime.now()))
         self.open_box.addItem(str(id) + ' - ' + str(self.task.normal()))
         con.commit()
         cur.execute('''DELETE from Saved_tasks WHERE TRUE''')
@@ -890,7 +890,7 @@ VALUES (?, ?, ?, ?)''', (f'I{i + 1}', MYH[i + 1], sum(MH[i + 1]), MYKY[i]))
                 '''SELECT file_path FROM full_info_saved_task WHERE id = ? AND id = ?''',
                 (int(id_), int(id_))).fetchall()
             with open(file[0][0], 'r') as file:
-                data = json.load(file)
+                data = load(file)
             self.new_window = QMainWindow()
             self.ui = Decide(self)
             self.ui.MYH.setText(data['MYH'])
