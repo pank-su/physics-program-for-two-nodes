@@ -563,7 +563,7 @@ class Ui_Form(object):
         self.comboBox.setItemText(0, _translate("Form", "resistor"))
         self.comboBox.setItemText(1, _translate("Form", "generator"))
         self.comboBox.setItemText(2, _translate("Form", "node"))
-        self.decide.setText(_translate("Form", "Решить"))
+        self.decide.setText(_translate("Form", "Decide"))
         self.resistor_text.setText(_translate("Form", "0"))
         self.edit.setText(_translate("Form", "Edit"))
         self.resistor_text_4.setText(_translate("Form", "0"))
