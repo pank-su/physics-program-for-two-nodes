@@ -911,6 +911,8 @@ VALUES (?, ?, ?, ?)''', (f'I{i + 1}', MYH[i + 1], sum(MH[i + 1]), MYKY[i]))
             with open(file[0][0], 'r') as file:
                 data = load(file)
             self.new_window = QMainWindow()
+            self.central_widget = QtWidgets.QWidget(self)
+            self.new_window.setCentralWidget(self.central_widget)
             self.ui = Decide(self)
             self.ui.MYH.setText(data['MYH'])
             self.ui.MH.setText(data['MH'])
