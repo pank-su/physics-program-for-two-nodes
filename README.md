@@ -6,5 +6,5 @@
 
 Первое что вы увидите будет вот это 
 
-![screen](/for doc/screen.png)
+![](for doc/screen.png)
 
