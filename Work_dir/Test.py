@@ -808,12 +808,6 @@ class MyWidget(QMainWindow, Ui_Form):
             for i in range(1, len(legs) + 1):
                 result += 'I{} = {} = {}'.format(str(i), ' + '.join(map(str, dict_[i])),
                                                  str(round(float(sum(dict_[i])), 2))) + '\n'
-            if result.count('\n') > 30:
-                self.ui.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 10, 641, 641))
-                self.ui.tableView.setGeometry(0, 650, 641, 281)
-                self.ui.save.setGeometry(550, 935, 75, 23)
-                self.ui.info.setGeometry(456, 940, 81, 16)
-                self.new_window.setFixedSize(640, 968)
             self.dict_['MH'] = result
             self.ui.MH.setText(result)
 
