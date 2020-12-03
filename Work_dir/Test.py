@@ -235,6 +235,7 @@ def MYKY_method_for_out(legs: list):
 
 class Node(object):
     def __init__(self, parent):
+
         parent.open_nodes.append(QMainWindow())
 
         self.setupUi(parent.open_nodes[-1])
@@ -346,6 +347,17 @@ class Node(object):
         self.comboBox_3.setCurrentText(_translate("Form", "resistor"))
         self.comboBox_3.setItemText(0, _translate("Form", "resistor"))
         self.comboBox_3.setItemText(1, _translate("Form", "node"))
+
+    def create_node(self, task, sender):
+        self.new_node: Task_in_task = task.add_node(
+            int(sender.objectName().split('_')[1]) - 1)
+        self.new_node.add_resistor(0, 1, self.resistor)
+        self.new_node.add_resistor(1, 1, self.resistor_2)
+
+    def save_me(self, parent):
+        parent.open_nodes_class.append(self)
+
+
 
 
 # Это класс дизайна вывода решения
@@ -721,6 +733,7 @@ class MyWidget(QMainWindow, Ui_Form):
         # self.save_btn.setObjectName('save_btn')
         # self.save_btn.setText('save')
         self.open_nodes = []
+        self.open_nodes_class = []
         # Соединение интерфейса с программой и некоторое его изменение
         self.comboBox.setObjectName("comboBox_3")
         self.comboBox_2.setObjectName("comboBox_2")
@@ -776,7 +789,7 @@ class MyWidget(QMainWindow, Ui_Form):
         self.lineEdit_7.textEdited[str].connect(self.text_change)
         self.open_box = QtWidgets.QComboBox(self)
         self.open_box.setGeometry(QtCore.QRect(0, 0, 220, 20))
-
+        self.resistor_groups_for_node = {}
         self.open_box.addItem('open saves results')
         con = sqlite3.connect('funny.db')
         cur = con.cursor()
@@ -1173,24 +1186,61 @@ VALUES (?, ?, ?, ?)''', (f'I{i + 1}', MYH[i + 1], sum(MH[i + 1]), MYKY[i]))
                 self.ui_node.resistor_2.hide()
                 self.ui_node.resistor_text.setText('1')
                 self.ui_node.resistor_text_4.setText('1')
-                new_node: Task_in_task = self.task.add_node(int(self.sender().objectName().split('_')[1]) - 1)
-                new_node.add_resistor(0, 1, self.ui_node.resistor)
-                new_node.add_resistor(1, 1, self.ui_node.resistor)
+                self.ui_node.create_node(self.task, self.sender())
                 btn = QPushButton(self)
                 btn.setGeometry(QtCore.QRect(self.sender().x(), self.sender().y(), self.sender().width(), self.sender().height()))
                 btn.setObjectName(str(len(self.open_nodes) - 1))
                 btn.pressed.connect(self.open_node)
-                btn.setText(str(new_node.return_resistance()))
+                btn.setText('0.5')
                 btn.show()
                 self.sender().setGeometry(self.sender().x() + 20 + 81, self.sender().y(),
                                           self.sender().width(),
                                           self.sender().height())
+                self.ui_node.edit.pressed.connect(self.edit_resistor_for_node)
+                self.ui_node.edit_2.pressed.connect(self.edit_resistor_for_node)
+                self.resistor_groups_for_node[self.ui_node.front_resistor] = self.ui_node.resistor
+                self.resistor_groups_for_node[self.ui_node.front_resistor_2] = self.ui_node.resistor_2
+                self.resistor_groups_reverse_for_node = {value: key for key, value in
+                                                self.resistor_groups_for_node.items()}
+                self.ui_node.save_me(self)
                 self.ui_node.show(self)
         except Exception as e:
             print(e)
 
     def open_node(self):
         self.open_nodes[int(self.sender().objectName())].show()
+
+    def edit_resistor_for_node(self):
+        resistor = self.resistor_groups_for_node[self.sender().parent()]
+        resistor.children()[1].setValue(float(self.sender().parent().children()[0].text()))
+        resistor.children()[0].pressed.connect(self.ok_resistor_for_node)
+        resistor.show()
+        self.sender().parent().hide()
+
+    def ok_resistor_for_node(self):
+        try:
+            node: Task_in_task = self.open_nodes_class[
+                self.open_nodes.index(self.sender().parent().parent())].new_node
+
+            resistor = self.resistor_groups_reverse_for_node[self.sender().parent()]
+            back_resistor = self.sender().parent().children()
+            print(len(node.legs[0]))
+            resistor_leg = \
+                [(i, g) for i in range(len(node.legs)) for g in range(len(node.legs[i])) if
+                 self.sender().parent() == node.legs[i][g][-1]][0]
+            print(resistor_leg)
+            node.edit_resistor(resistor_leg[0], resistor_leg[1],
+                                    back_resistor[1].value())
+            if back_resistor[1].value() == int(
+                    back_resistor[1].value()):
+                resistor.children()[0].setText(str(int(back_resistor[1].value())))
+            else:
+                resistor.children()[0].setText(str(back_resistor[1].value()))
+            self.sender().parent().hide()
+            resistor.show()
+        except Exception as e:
+            print(e)
+
 
     # Функция которая пока используется в одном источнике
     # (она не даёт писать любые буквы кроме нужных)
