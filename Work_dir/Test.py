@@ -53,9 +53,12 @@ class Task:
         self.legs[leg_index][el_index] = new
 
     # добаление узла(нереализованное действие)
-    def add_node(self, leg_index: int, legs_num: int):
-        self.legs[leg_index].append(Task_in_task(legs_num))
+    def add_node(self, leg_index: int):
+        self.legs[leg_index].append(Task_in_task())
         return self.legs[leg_index][-1]
+
+    def get_node(self, leg_index: int, el_index: int):
+        return self.legs[leg_index][el_index]
 
     # перевод всей задачи в нормальный вид(вид в котором могут читать функции методов)
     def normal(self) -> list:
@@ -228,6 +231,121 @@ def MYKY_method_for_out(legs: list):
     b = np.array(b)
     x = np.linalg.solve(a, b)
     yield x
+
+
+class Node(object):
+    def __init__(self, parent):
+        parent.open_nodes.append(QMainWindow())
+
+        self.setupUi(parent.open_nodes[-1])
+        self.index = len(parent.open_nodes) - 1
+
+    def show(self, parent):
+        parent.open_nodes[self.index].show()
+
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.setEnabled(True)
+        Form.resize(463, 219)
+        self.radioButton = QtWidgets.QRadioButton(Form)
+        self.radioButton.setEnabled(True)
+        self.radioButton.setGeometry(QtCore.QRect(40, 80, 16, 17))
+        self.radioButton.setText("")
+        self.radioButton.setCheckable(True)
+        self.radioButton.setChecked(False)
+        self.radioButton.setAutoRepeat(True)
+        self.radioButton.setObjectName("radioButton")
+        self.label = QtWidgets.QLabel(Form)
+        self.label.setGeometry(QtCore.QRect(30, 80, 16, 16))
+        self.label.setObjectName("label")
+        self.resistor = QtWidgets.QGroupBox(Form)
+        self.resistor.setGeometry(QtCore.QRect(110, 20, 81, 51))
+        self.resistor.setObjectName("resistor")
+        self.pushButton = QtWidgets.QPushButton(self.resistor)
+        self.pushButton.setGeometry(QtCore.QRect(50, 20, 31, 23))
+        self.pushButton.setObjectName("pushButton")
+        self.doubleSpinBox = QtWidgets.QDoubleSpinBox(self.resistor)
+        self.doubleSpinBox.setGeometry(QtCore.QRect(10, 20, 41, 22))
+        self.doubleSpinBox.setObjectName("doubleSpinBox")
+        self.resistor_2 = QtWidgets.QGroupBox(Form)
+        self.resistor_2.setGeometry(QtCore.QRect(110, 90, 81, 51))
+        self.resistor_2.setObjectName("resistor_2")
+        self.pushButton_10 = QtWidgets.QPushButton(self.resistor_2)
+        self.pushButton_10.setGeometry(QtCore.QRect(50, 20, 31, 23))
+        self.pushButton_10.setObjectName("pushButton_10")
+        self.doubleSpinBox_15 = QtWidgets.QDoubleSpinBox(self.resistor_2)
+        self.doubleSpinBox_15.setGeometry(QtCore.QRect(10, 20, 41, 22))
+        self.doubleSpinBox_15.setObjectName("doubleSpinBox_15")
+        self.add_new_line = QtWidgets.QPushButton(Form)
+        self.add_new_line.setGeometry(QtCore.QRect(270, 140, 75, 23))
+        self.add_new_line.setObjectName("add_new_line")
+        self.pushButton_3 = QtWidgets.QPushButton(Form)
+        self.pushButton_3.setGeometry(QtCore.QRect(360, 160, 61, 31))
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.front_resistor = QtWidgets.QGroupBox(Form)
+        self.front_resistor.setGeometry(QtCore.QRect(110, 30, 81, 41))
+        self.front_resistor.setTitle("")
+        self.front_resistor.setObjectName("front_resistor")
+        self.resistor_text = QtWidgets.QLabel(self.front_resistor)
+        self.resistor_text.setGeometry(QtCore.QRect(20, 10, 21, 16))
+        self.resistor_text.setObjectName("resistor_text")
+        self.edit = QtWidgets.QPushButton(self.front_resistor)
+        self.edit.setGeometry(QtCore.QRect(40, 10, 31, 23))
+        self.edit.setObjectName("edit")
+        self.front_resistor_2 = QtWidgets.QGroupBox(Form)
+        self.front_resistor_2.setGeometry(QtCore.QRect(110, 100, 81, 41))
+        self.front_resistor_2.setTitle("")
+        self.front_resistor_2.setObjectName("front_resistor_2")
+        self.resistor_text_4 = QtWidgets.QLabel(self.front_resistor_2)
+        self.resistor_text_4.setGeometry(QtCore.QRect(20, 10, 21, 16))
+        self.resistor_text_4.setObjectName("resistor_text_4")
+        self.edit_2 = QtWidgets.QPushButton(self.front_resistor_2)
+        self.edit_2.setGeometry(QtCore.QRect(40, 10, 31, 23))
+        self.edit_2.setObjectName("edit_2")
+        self.comboBox_2 = QtWidgets.QComboBox(Form)
+        self.comboBox_2.setGeometry(QtCore.QRect(220, 110, 61, 22))
+        self.comboBox_2.setObjectName("comboBox_2")
+        self.comboBox_2.addItem("")
+        self.comboBox_2.addItem("")
+        self.comboBox_3 = QtWidgets.QComboBox(Form)
+        self.comboBox_3.setGeometry(QtCore.QRect(220, 40, 61, 22))
+        self.comboBox_3.setObjectName("comboBox_3")
+        self.comboBox_3.addItem("")
+        self.comboBox_3.addItem("")
+        self.front_resistor_2.raise_()
+        self.front_resistor.raise_()
+        self.radioButton.raise_()
+        self.label.raise_()
+        self.resistor.raise_()
+        self.resistor_2.raise_()
+        self.add_new_line.raise_()
+        self.pushButton_3.raise_()
+        self.comboBox_2.raise_()
+        self.comboBox_3.raise_()
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.label.setText(_translate("Form", "A"))
+        self.resistor.setTitle(_translate("Form", "Resistor"))
+        self.pushButton.setText(_translate("Form", "OK"))
+        self.resistor_2.setTitle(_translate("Form", "Resistor"))
+        self.pushButton_10.setText(_translate("Form", "OK"))
+        self.add_new_line.setText(_translate("Form", "Add new line"))
+        self.pushButton_3.setText(_translate("Form", "OK"))
+        self.resistor_text.setText(_translate("Form", "0"))
+        self.edit.setText(_translate("Form", "Edit"))
+        self.resistor_text_4.setText(_translate("Form", "0"))
+        self.edit_2.setText(_translate("Form", "Edit"))
+        self.comboBox_2.setCurrentText(_translate("Form", "resistor"))
+        self.comboBox_2.setItemText(0, _translate("Form", "resistor"))
+        self.comboBox_2.setItemText(1, _translate("Form", "node"))
+        self.comboBox_3.setCurrentText(_translate("Form", "resistor"))
+        self.comboBox_3.setItemText(0, _translate("Form", "resistor"))
+        self.comboBox_3.setItemText(1, _translate("Form", "node"))
 
 
 # Это класс дизайна вывода решения
@@ -602,7 +720,7 @@ class MyWidget(QMainWindow, Ui_Form):
         # self.save_btn.setGeometry(QtCore.QRect(390, 300, 75, 23))
         # self.save_btn.setObjectName('save_btn')
         # self.save_btn.setText('save')
-
+        self.open_nodes = []
         # Соединение интерфейса с программой и некоторое его изменение
         self.comboBox.setObjectName("comboBox_3")
         self.comboBox_2.setObjectName("comboBox_2")
@@ -1049,8 +1167,30 @@ VALUES (?, ?, ?, ?)''', (f'I{i + 1}', MYH[i + 1], sum(MH[i + 1]), MYKY[i]))
                 self.resistor_groups_reverse[new_resistor] = new_front_resistor
                 new_resistor.children()[0].pressed.connect(self.ok_resistor)
                 new_front_resistor.children()[1].pressed.connect(self.edit_resisitor)
+            elif self.sender().itemText(index) == 'node':
+                self.ui_node = Node(self)
+                self.ui_node.resistor.hide()
+                self.ui_node.resistor_2.hide()
+                self.ui_node.resistor_text.setText('1')
+                self.ui_node.resistor_text_4.setText('1')
+                new_node: Task_in_task = self.task.add_node(int(self.sender().objectName().split('_')[1]) - 1)
+                new_node.add_resistor(0, 1, self.ui_node.resistor)
+                new_node.add_resistor(1, 1, self.ui_node.resistor)
+                btn = QPushButton(self)
+                btn.setGeometry(QtCore.QRect(self.sender().x(), self.sender().y(), self.sender().width(), self.sender().height()))
+                btn.setObjectName(str(len(self.open_nodes) - 1))
+                btn.pressed.connect(self.open_node)
+                btn.setText(str(new_node.return_resistance()))
+                btn.show()
+                self.sender().setGeometry(self.sender().x() + 20 + 81, self.sender().y(),
+                                          self.sender().width(),
+                                          self.sender().height())
+                self.ui_node.show(self)
         except Exception as e:
             print(e)
+
+    def open_node(self):
+        self.open_nodes[int(self.sender().objectName())].show()
 
     # Функция которая пока используется в одном источнике
     # (она не даёт писать любые буквы кроме нужных)
